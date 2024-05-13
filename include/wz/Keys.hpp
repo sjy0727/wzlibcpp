@@ -105,7 +105,7 @@ namespace wz {
         u8& operator[] (size_t index);
 
     private:
-        static constexpr auto batch_size = 4096;
+        static constexpr auto batch_size = 0x10000;
         std::array<u8, 4> iv {0, 0, 0, 0};
         std::vector<u8> aes_key;
         std::vector<u8> keys;
