@@ -1,8 +1,7 @@
 #include "Property.hpp"
 #include "Types.hpp"
 
-
-// 直接获取纹理格式数据，可以直接导入到游戏引擎使用
+// get ARGB4444 piexl,ARGB8888 piexl and others.....
 template <>
 std::vector<u8> wz::Property<wz::WzCanvas>::get_raw_data(std::array<u8, 4> iv)
 {
@@ -40,11 +39,11 @@ std::vector<u8> wz::Property<wz::WzCanvas>::get_raw_data(std::array<u8, 4> iv)
     }
 
     std::vector<u8> pixel_stream(uncompressed, uncompressed + uncompressed_len);
+    delete uncompressed;
     return pixel_stream;
 }
 
-//
-
+// get Sound node raw data
 template <>
 std::vector<u8> wz::Property<wz::WzSound>::get_raw_data(std::array<u8, 4> iv)
 {
@@ -61,6 +60,7 @@ std::vector<u8> wz::Property<wz::WzSound>::get_raw_data(std::array<u8, 4> iv)
     return data_stream;
 }
 
+//get uol By uol node
 template <>
 wz::Node *wz::Property<wz::WzUOL>::get_uol()
 {
