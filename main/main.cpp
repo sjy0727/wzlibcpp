@@ -9,7 +9,7 @@
 #include <wz/Property.hpp>
 
 #include <iostream>
-#include <fstream> // 包含文件操作的头文件
+#include <fstream>
 
 #define U8 static_cast<u8>
 #define IV4(A, B, C, D)            \
@@ -20,7 +20,7 @@
 int main()
 {
     const auto iv = IV4(0xb9, 0x7d, 0x63, 0xe9);
-    wz::File file(iv, "C:/Users/Shocker/Desktop/gdtest/Data/Map.wz");
+    wz::File file(iv, "Map.wz");
 
     if (file.parse())
     {

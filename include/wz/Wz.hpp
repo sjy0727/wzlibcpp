@@ -1,5 +1,4 @@
-#ifndef __WZ_h__
-#define __WZ_h__
+#pragma once
 
 #include "Types.hpp"
 
@@ -64,5 +63,3 @@ namespace wz {
     void initAES(const u8* iv);
 
 }
-
-#endif

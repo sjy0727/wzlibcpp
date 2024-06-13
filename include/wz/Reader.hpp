@@ -12,16 +12,12 @@ namespace wz
     class Reader final
     {
     public:
-#if defined(__ANDROID__)
-        explicit Reader(wz::MutableKey &new_key, std::vector<u8> buffer);
-#else
         explicit Reader(wz::MutableKey &new_key, const char *file_path);
-#endif
 
         template <typename T>
         [[nodiscard]] T read()
         {
-            auto result = *reinterpret_cast<T *>(&mmap[cursor]);
+            T result = *reinterpret_cast<T *>(&mmap[cursor]);
             cursor += sizeof(decltype(result));
             return result;
         }
@@ -74,11 +70,9 @@ namespace wz
         MutableKey &key;
 
         size_t cursor = 0;
-#if defined(__ANDROID__)
-        std::vector<u8> mmap;
-#else
+
         mio::mmap_source mmap;
-#endif
+
         explicit Reader() = delete;
 
         friend class Node;

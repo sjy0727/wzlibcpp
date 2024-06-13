@@ -29,7 +29,7 @@ namespace wz
             return data;
         }
 
-        [[nodiscard]] [[maybe_unused]] std::vector<u8> get_raw_data(std::array<u8, 4> iv = {0, 0, 0, 0});
+        [[nodiscard]] [[maybe_unused]] std::vector<u8> get_raw_data();
 
         [[nodiscard]] [[maybe_unused]] wz::Node *get_uol();
 

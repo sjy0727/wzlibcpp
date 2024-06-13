@@ -3,7 +3,7 @@
 
 // get ARGB4444 piexl,ARGB8888 piexl and others.....
 template <>
-std::vector<u8> wz::Property<wz::WzCanvas>::get_raw_data(std::array<u8, 4> iv)
+std::vector<u8> wz::Property<wz::WzCanvas>::get_raw_data()
 {
     WzCanvas canvas = get();
 
@@ -18,8 +18,7 @@ std::vector<u8> wz::Property<wz::WzCanvas>::get_raw_data(std::array<u8, 4> iv)
         {
             data_stream.push_back(reader->read_byte());
         }
-        int len = data_stream.size();
-        uncompress(uncompressed, &uncompressed_len, data_stream.data(), data_stream.size());
+        uncompress(uncompressed, (unsigned long *)&uncompressed_len, data_stream.data(), data_stream.size());
     }
     else
     {
@@ -39,13 +38,13 @@ std::vector<u8> wz::Property<wz::WzCanvas>::get_raw_data(std::array<u8, 4> iv)
     }
 
     std::vector<u8> pixel_stream(uncompressed, uncompressed + uncompressed_len);
-    delete uncompressed;
+    delete[] uncompressed;
     return pixel_stream;
 }
 
 // get Sound node raw data
 template <>
-std::vector<u8> wz::Property<wz::WzSound>::get_raw_data(std::array<u8, 4> iv)
+std::vector<u8> wz::Property<wz::WzSound>::get_raw_data()
 {
     WzSound sound = get();
     std::vector<u8> data_stream;
@@ -60,7 +59,7 @@ std::vector<u8> wz::Property<wz::WzSound>::get_raw_data(std::array<u8, 4> iv)
     return data_stream;
 }
 
-//get uol By uol node
+// get uol By uol node
 template <>
 wz::Node *wz::Property<wz::WzUOL>::get_uol()
 {

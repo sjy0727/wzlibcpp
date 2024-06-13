@@ -4,20 +4,12 @@
 #include "Reader.hpp"
 #include "Keys.hpp"
 
-#if defined(__ANDROID__)
-wz::Reader::Reader(wz::MutableKey &new_key, std::vector<u8> buffer)
-    : cursor(0), key(new_key)
-{
-    mmap = buffer;
-}
-#else
 wz::Reader::Reader(wz::MutableKey &new_key, const char *file_path)
     : cursor(0), key(new_key)
 {
     std::error_code error_code;
     mmap = mio::make_mmap_source<decltype(file_path)>(file_path, error_code);
 }
-#endif
 
 u8 wz::Reader::read_byte()
 {

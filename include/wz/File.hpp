@@ -11,13 +11,11 @@ namespace wz
     {
 
     public:
-#if defined(__ANDROID__)
-        [[maybe_unused]] explicit File(const std::initializer_list<u8> &new_iv, std::vector<u8> buffer);
-#else
+        [[maybe_unused]] explicit File(const std::initializer_list<u8> &new_iv, unsigned char *wz_buf, unsigned int wz_size);
+
         [[maybe_unused]] explicit File(const std::initializer_list<u8> &new_iv, const char *path);
 
         [[maybe_unused]] explicit File(u8 *new_iv, const char *path);
-#endif
 
         ~File();
 
