@@ -1,10 +1,6 @@
-[submodule "mio"]
-	path = mio
-	url = https://github.com/mandreyel/mio
-[submodule "AES"]
-	path = AES
-	url = https://github.com/SeaniaTwix/AES
-[submodule "zlib"]
-	path = zlib
+[submodule "3rdparty/mio"]
+	path = 3rdparty/mio
+	url = https://github.com/mandreyel/mio.git
+[submodule "3rdparty/zlib"]
+	path = 3rdparty/zlib
 	url = https://github.com/madler/zlib.git
-	ignore = dirty

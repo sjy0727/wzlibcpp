@@ -3,16 +3,17 @@ project(wzlibcpp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(zlib)
-add_subdirectory(mio)
+add_subdirectory(3rdparty/zlib)
+add_subdirectory(3rdparty/mio)
+add_subdirectory(3rdparty/AES)
 
 
 file(GLOB SOURCE_FILES src/*.cpp)
-file(GLOB AES_SOURCE_FILES AES/AES.cpp)
+#file(GLOB AES_SOURCE_FILES AES/AES.cpp)
 
-add_library(wzlib STATIC ${SOURCE_FILES} ${AES_SOURCE_FILES})
+add_library(wzlib STATIC ${SOURCE_FILES})
 
-target_link_libraries(wzlib PUBLIC zlibstatic mio::mio)
+target_link_libraries(wzlib PUBLIC zlibstatic mio::mio AES)
 
 target_include_directories(wzlib
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
