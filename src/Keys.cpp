@@ -1,6 +1,7 @@
 #include "Keys.hpp"
+#include "AES/AES.h"
 
-wz::MutableKey::MutableKey(const array<u8, 4>& new_iv, std::vector<u8> new_aes_key)
+wz::MutableKey::MutableKey(const std::array<u8, 4>& new_iv, std::vector<u8> new_aes_key)
     : iv(new_iv), aes_key(std::move(new_aes_key)) {
 }
 

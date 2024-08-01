@@ -3,8 +3,6 @@
 #include "NumTypes.hpp"
 #include <vector>
 #include <array>
-#include <cmath>
-#include "AES/AES.h"
 
 namespace wz {
     static const u8 AesKey1[] = {
@@ -88,6 +86,10 @@ namespace wz {
 
     static const u32 HeaderMagic = 0x31474B50;
 
+    /**
+     * 将wz::user_key数组中的每个字节按照每16个字节一组进行分割，然后将每组的第一个字节存储在num数组的对应位置。最后返回num数组。
+     * @return 分割后的数组
+     */
     static std::vector<u8> get_trimmed_user_key()  {
         std::vector<u8> num(32);
         for (int i = 0; i < 128; i += 16) {
@@ -96,20 +98,25 @@ namespace wz {
         return num;
     }
 
+    // 可变秘钥
     class MutableKey final {
     public:
         explicit MutableKey() = default;
 
+        // 用于从给定的IV（初始化向量）和AES密钥创建一个MutableKey对象。
         explicit MutableKey(const std::array<u8, 4>& new_iv, std::vector<u8> new_aes_key);
 
+        // 用于访问MutableKey对象的密钥数组中的元素。
         u8& operator[] (size_t index);
 
     private:
+        // 表示密钥数组的最大大小。
         static constexpr auto batch_size = 0x10000;
         std::array<u8, 4> iv {0, 0, 0, 0};
         std::vector<u8> aes_key;
         std::vector<u8> keys;
 
+        // 用于确保密钥数组的大小至少为给定的size。
         void ensure_key_size(size_t size);
     };
 

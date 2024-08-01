@@ -4,7 +4,7 @@
 #include "Directory.hpp"
 
 [[maybe_unused]] wz::File::File(const std::initializer_list<u8> &new_iv, const char *path)
-    : reader(Reader(key, path)), root(new Node(Type::NotSet, this)), key(), iv(nullptr)
+    : key(), iv(nullptr), root(new Node(Type::NotSet, this)), reader(Reader(key, path))
 {
     iv = new u8[4];
     memcpy(iv, new_iv.begin(), 4);
@@ -13,7 +13,7 @@
 }
 
 [[maybe_unused]] wz::File::File(u8 *new_iv, const char *path)
-    : reader(Reader(key, path)), root(new Node(Type::NotSet, this)), key(), iv(new_iv)
+    : key(), iv(new_iv), root(new Node(Type::NotSet, this)), reader(Reader(key, path))
 {
     init_key();
     reader.set_key(key);
@@ -56,7 +56,6 @@ bool wz::File::parse(const wzstring &name)
             if (!parse_directories(nullptr))
             {
                 reader.set_position(prev_position);
-                continue;
             }
             else
             {
@@ -81,7 +80,6 @@ bool wz::File::parse_directories(wz::Node *node)
     for (int i = 0; i < entry_count; ++i)
     {
         auto type = reader.read_byte();
-        size_t prevPos = 0;
         wzstring name;
 
         if (type == 1)
@@ -129,7 +127,7 @@ bool wz::File::parse_directories(wz::Node *node)
             }
             else
             {
-                prevPos = reader.get_position();
+                size_t prevPos = reader.get_position();
                 reader.set_position(offset);
 
                 if (!reader.is_wz_image())

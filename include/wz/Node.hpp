@@ -60,7 +60,7 @@ namespace wz
         File *file;
         Reader *reader = nullptr;
 
-        std::u16string path = u"";
+        std::u16string path;
 
         bool parse_property_list(Node *target, size_t offset);
         void parse_extended_prop(const wzstring &name, Node *target, const size_t &offset);
